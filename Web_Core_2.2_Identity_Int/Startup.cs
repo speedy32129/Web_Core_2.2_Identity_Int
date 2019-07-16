@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Web_Core_2._2_Identity_Int.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Web_Core_2._2_Identity_int.Models.Identity;
 
 namespace Web_Core_2._2_Identity_Int
 {
@@ -38,9 +39,11 @@ namespace Web_Core_2._2_Identity_Int
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
